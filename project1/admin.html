@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+<style>
+table button {
+  padding: 6px 10px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+table button:first-child {
+  background: #00aaff;
+  color: #fff;
+}
+
+table button:last-child {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+</style>
+</head>
+<body>
+
+  <header>
+    <h2 class="logo">QuickServe Admin</h2>
+  </header>
+
+  <section class="section">
+    <h2>Bookings</h2>
+
+    <table id="bookingTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Service</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JS will insert rows here -->
+      </tbody>
+    </table>
+  </section>
+
+  <script type="text/javascript">
+  
+  const tableBody = document.querySelector("#bookingTable tbody");
+
+function loadBookings() {
+  tableBody.innerHTML = "";
+
+  let bookings = localStorage.getItem("bookings");
+  bookings = bookings ? JSON.parse(bookings) : [];
+
+  if (bookings.length === 0) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="7">No bookings found</td>
+      </tr>
+    `;
+    return;
+  }
+
+  bookings.forEach((booking, index) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${booking.name}</td>
+      <td>${booking.email}</td>
+      <td>${booking.service}</td>
+      <td>${booking.date}</td>
+      <td>${booking.time}</td>
+      <td>${booking.status}</td>
+      <td>
+        <button onclick="markCompleted(${index})">Complete</button>
+        <button onclick="deleteBooking(${index})">Delete</button>
+      </td>
+    `;
+
+    tableBody.appendChild(row);
+  });
+}
+
+function markCompleted(index) {
+  let bookings = JSON.parse(localStorage.getItem("bookings"));
+  bookings[index].status = "Completed";
+  localStorage.setItem("bookings", JSON.stringify(bookings));
+  loadBookings();
+}
+
+function deleteBooking(index) {
+  let bookings = JSON.parse(localStorage.getItem("bookings"));
+  bookings.splice(index, 1);
+  localStorage.setItem("bookings", JSON.stringify(bookings));
+  loadBookings();
+}
+
+loadBookings();
+
+  </script>
+</body>
+</html>
