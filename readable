@@ -1,0 +1,28 @@
+# QuickServe Booking Website
+
+This project contains a simple service booking website and an admin dashboard. Bookings are stored in the browser using localStorage.
+
+## Features
+
+### Main Website
+- Service cards and basic homepage
+- Booking form (name, email, service, date, time, message)
+- Saves bookings to localStorage
+
+### Admin Dashboard
+- Shows all bookings in a table
+- Mark a booking as completed
+- Delete a booking
+- Updates localStorage automatically
+
+## Files
+- index.html — main website
+- admin.html — admin dashboard
+
+## How It Works
+The form on the main site saves each booking into localStorage.  
+The admin page reads the saved data and allows updating or deleting it.
+
+## Usage
+Open `index.html` in a browser for the main site.  
+Open `admin.html` to view or manage bookings.
